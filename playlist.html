@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Playlist</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="songInfo.css">
+</head>
+<body>
+  <!-- Original header kept -->
+  <button style="float:right" id="user-area"></button>
+  <a href="listen.html"><button style="font-size: 20px; float:right; margin-right: 15px;">Back to Songs</button></a>
+  <a href="index.html" style="float: left"><button style="all: unset;"><img id="miniLogo" class="logo" src="Logos/logoWmini.png" alt="logo" width="150" height="auto"></button></a>
+  
+  <script src="register.js"></script>
+  <script src="toggleTheme.js"></script>
+  
+  <div class="vinyl" style="margin-top:150px;">
+    <div class="label"></div>
+    <div class="spindle"></div>
+  </div>
+  
+  <div class="container" style="margin-top: -200px;">
+    <input id="search" placeholder="Search in my playlist...">
+    <div id="playlistList"></div>
+    <div id="emptyState" style="display: none;">
+      <div style="text-align: center; margin: 80px 0;">
+        <h3 style="color: var(--text-color); font-size: 24px; margin-bottom: 15px;">Your playlist is empty</h3>
+        <p style="color: var(--text-color); opacity: 0.7; margin-bottom: 30px;">Add some tracks to get started!</p>
+        <a href="listen.html"><button>Browse Songs</button></a>
+      </div>
+    </div>
+    <button id="clearAll" style="margin-top: 30px; background-color: #ff4444; display: none;">Clear All</button>
+  </div>
+  
+  <audio id="player" controls style="width: 70%;"></audio>
+  
+  <!-- Modal added (only new thing) -->
+  <div id="songInfoModal" class="song-info-modal">
+    <div class="song-info-content">
+      <div class="song-info-header">
+        <h3 id="modalSongTitle"></h3>
+        <button class="close-btn" onclick="closeSongModal()">×</button>
+      </div>
+      <div class="song-info-body">
+        <div class="info-item">
+          <strong>Artist:</strong>
+          <span id="modalArtist"></span>
+        </div>
+        <div class="info-item">
+          <strong>Year:</strong>
+          <span id="modalYear"></span>
+        </div>
+        <div class="info-item">
+          <strong>Genre:</strong>
+          <span id="modalGenre"></span>
+        </div>
+        <div class="song-description">
+          <h4>About this track</h4>
+          <p id="modalInfo"></p>
+        </div>
+      </div>
+      <div class="song-info-actions">
+        <button class="modal-btn play-modal-btn" id="modalPlayBtn">Play Now</button>
+        <button class="modal-btn remove-modal-btn" id="modalRemoveBtn">Remove</button>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    let playlist = JSON.parse(localStorage.getItem('playlist')) || [];
+    const playlistList = document.getElementById("playlistList");
+    const searchInput = document.getElementById("search");
+    const player = document.getElementById("player");
+    const clearButton = document.getElementById("clearAll");
+    const emptyState = document.getElementById("emptyState");
+    const modal = document.getElementById("songInfoModal");
+    let currentSongIndex = null;
+
+    function displayPlaylist(filter = "") {
+      playlistList.innerHTML = "";
+      
+      if (playlist.length === 0) {
+        emptyState.style.display = "block";
+        clearButton.style.display = "none";
+        return;
+      }
+
+      emptyState.style.display = "none";
+      clearButton.style.display = "inline-block";
+
+      const filteredPlaylist = playlist.filter(song => 
+        song.title.toLowerCase().includes(filter.toLowerCase())
+      );
+
+      if (filteredPlaylist.length === 0 && filter) {
+        playlistList.innerHTML = `
+          <div style="text-align: center; margin: 50px 0; color: var(--text-color);">
+            <p>No songs found matching "${filter}"</p>
+          </div>
+        `;
+        return;
+      }
+
+      filteredPlaylist.forEach((song, index) => {
+        const originalIndex = playlist.indexOf(song);
+        const div = document.createElement("div");
+        div.className = "song";
+        div.innerHTML = `
+          <div class="song-left">
+            <img src="play.png" onclick="playSong(${originalIndex})" />
+            <span class="song-title" onclick="openSongInfo(${originalIndex})">${song.title}</span>
+          </div>
+          <button class="remove-btn" onclick="removeFromPlaylist(${originalIndex})" title="Remove from playlist">×</button>
+        `;
+        playlistList.appendChild(div);
+      });
+    }
+
+    function playSong(index) {
+      if (playlist[index]) {
+        player.src = playlist[index].file;
+        player.play().catch(e => console.log('Playback failed:', e));
+      }
+    }
+
+    function removeFromPlaylist(index) {
+      if (index >= 0 && index < playlist.length) {
+        playlist.splice(index, 1);
+        localStorage.setItem('playlist', JSON.stringify(playlist));
+        displayPlaylist(searchInput.value);
+        if (modal.classList.contains('show')) {
+          closeSongModal();
+        }
+      }
+    }
+
+    function clearAllPlaylist() {
+      if (confirm('Remove all songs from playlist?')) {
+        playlist = [];
+        localStorage.removeItem('playlist');
+        displayPlaylist();
+      }
+    }
+
+    // Modal functions (new)
+    function openSongInfo(index) {
+      currentSongIndex = index;
+      const song = playlist[index];
+      if (!song) return;
+      
+      document.getElementById('modalSongTitle').textContent = song.title;
+      document.getElementById('modalArtist').textContent = song.artist;
+      document.getElementById('modalYear').textContent = song.year;
+      document.getElementById('modalGenre').textContent = song.genre;
+      document.getElementById('modalInfo').textContent = song.info;
+      
+      modal.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSongModal() {
+      modal.classList.remove('show');
+      modal.classList.add('hide');
+      document.body.style.overflow = 'auto';
+      
+      setTimeout(() => {
+        modal.classList.remove('hide');
+        currentSongIndex = null;
+      }, 300);
+    }
+
+    document.getElementById('modalPlayBtn').addEventListener('click', () => {
+      if (currentSongIndex !== null) {
+        playSong(currentSongIndex);
+        closeSongModal();
+      }
+    });
+
+    document.getElementById('modalRemoveBtn').addEventListener('click', () => {
+      if (currentSongIndex !== null) {
+        removeFromPlaylist(currentSongIndex);
+      }
+    });
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeSongModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('show')) {
+        closeSongModal();
+      }
+    });
+
+    // Original event listeners
+    searchInput.addEventListener("input", () => {
+      displayPlaylist(searchInput.value);
+    });
+
+    clearButton.addEventListener("click", clearAllPlaylist);
+
+    displayPlaylist();
+  </script>
+
+  <style>
+    .remove-btn {
+      padding: 8px 12px;
+      border: none;
+      background-color: #ff4444;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: bold;
+      transition: all 0.2s ease;
+      line-height: 1;
+    }
+    
+    .remove-btn:hover {
+      background-color: #cc3333;
+      transform: scale(1.1);
+    }
+
+    #clearAll:hover {
+      background-color: #cc3333;
+    }
+
+    .song {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .song:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    #emptyState h3 {
+      font-weight: normal;
+    }
+
+    .remove-modal-btn {
+      background: #ff4444;
+      color: white;
+    }
+
+    .remove-modal-btn:hover {
+      background: #cc3333;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</body>
+</html>

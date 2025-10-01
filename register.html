@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - Play Beat</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+ 
+  <header class="nav-header">
+    <div class="logo-container">
+      <a href="index.html">
+        <img class="logo" src="Logos/logoWmini.png" alt="Play Beat Logo" width="150" height="auto">
+      </a>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="register.html" class="active">Register</a>
+      <a href="#music">Music</a>
+      <a href="#about">About</a>
+    </nav>
+  </header>
+
+  
+  <div class="register-grid">
+   
+    <aside class="info-section">
+      <div class="vinyl-hero">
+        <div class="vinyl-decoration">
+          <div class="label"></div>
+          <div class="spindle"></div>
+        </div>
+        <h2>Join Play Beat</h2>
+        <p>Your music journey starts here</p>
+      </div>
+
+      
+      <div class="feature-cards">
+        <div class="feature-card">
+          <div class="feature-icon">🎵</div>
+          <h3>Unlimited Music</h3>
+          <p>Access millions of songs from around the world</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">👥</div>
+          <h3>Connect with Friends</h3>
+          <p>Share your favorite tracks and discover new music together</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">📱</div>
+          <h3>Play Anywhere</h3>
+          <p>Listen on any device, anytime, anywhere</p>
+        </div>
+      </div>
+    </aside>
+
+ 
+    <main class="form-section">
+      <div class="form-container">
+        <h1 class="form-title">Create Your Account</h1>
+        <p class="form-subtitle">Start your musical adventure today</p>
+
+        <form id="register-form" class="register-form">
+          <div class="form-group">
+            <label for="username">Full Name</label>
+            <div class="input-wrapper">
+              <span class="input-icon">👤</span>
+              <input type="text" id="username" placeholder="Enter your name" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <div class="input-wrapper">
+              <span class="input-icon">📞</span>
+              <input type="tel" id="phone" placeholder="+7 (XXX) XXX-XX-XX" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <div class="input-wrapper">
+              <span class="input-icon">✉️</span>
+              <input type="email" id="email" placeholder="your@email.com" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <div class="input-wrapper">
+              <span class="input-icon">🔒</span>
+              <input type="password" id="password" placeholder="Enter password" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="confirm-password">Confirm Password</label>
+            <div class="input-wrapper">
+              <span class="input-icon">🔒</span>
+              <input type="password" id="confirm-password" placeholder="Repeat password" required>
+            </div>
+          </div>
+
+          <button type="submit" class="submit-btn">Create Account</button>
+        </form>
+
+        <div class="form-footer">
+          <p>Already have an account? <a href="index.html">Sign In</a></p>
+        </div>
+
+        <div class="back-home">
+          <a href="index.html">
+            <button class="back-btn">← Back to Home</button>
+          </a>
+        </div>
+      </div>
+    </main>
+
+    
+    <footer class="footer">
+      <p>&copy; 2024 Play Beat. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="#privacy">Privacy Policy</a>
+        <a href="#terms">Terms of Service</a>
+        <a href="#contact">Contact Us</a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="toggleTheme.js"></script>
+  <script src="register.js"></script>
+</body>
+</html>

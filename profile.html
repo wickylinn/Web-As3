@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile - Play Beat</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="profile-styles.css">
+</head>
+<body>
+
+  <header class="nav-header">
+    <div class="logo-container">
+      <a href="index.html">
+        <img class="logo" src="Logos/logoWmini.png" alt="Play Beat Logo" width="150" height="auto">
+      </a>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="profile.html" class="active">Profile</a>
+      <a href="#music">Music</a>
+      <a href="#about">About</a>
+    </nav>
+  </header>
+
+
+  <div class="page-grid">
+  
+    <aside class="sidebar">
+      <div class="vinyl-decoration">
+        <div class="label"></div>
+        <div class="spindle"></div>
+      </div>
+      <div class="quick-stats">
+        <h3>Quick Stats</h3>
+        <div class="stat-item">
+          <span class="stat-number">42</span>
+          <span class="stat-label">Songs</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">15</span>
+          <span class="stat-label">Playlists</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">128</span>
+          <span class="stat-label">Friends</span>
+        </div>
+      </div>
+    </aside>
+
+  
+    <main class="main-content">
+      <h1 class="page-title">Your Profile</h1>
+      
+   
+      <div class="profile-card">
+        <div id="profile-info" class="profile-info-content"></div>
+      </div>
+
+    
+      <div class="action-cards-container">
+        <div class="action-card" onclick="openFriends()">
+          <div class="card-icon">👥</div>
+          <h3>Friends</h3>
+          <p>Connect with other music lovers</p>
+          <button class="card-button">View Friends</button>
+        </div>
+
+        <div class="action-card" onclick="openSettings()">
+          <div class="card-icon">⚙️</div>
+          <h3>Settings</h3>
+          <p>Customize your experience</p>
+          <button class="card-button">Open Settings</button>
+        </div>
+
+        <div class="action-card" onclick="logout()">
+          <div class="card-icon">🚪</div>
+          <h3>Log Out</h3>
+          <p>Sign out from your account</p>
+          <button class="card-button logout-btn">Log Out</button>
+        </div>
+      </div>
+
+    
+      <div class="recent-activity">
+        <h2>Recent Activity</h2>
+        <div class="activity-grid">
+          <div class="activity-item">
+            <span class="activity-icon">🎵</span>
+            <div class="activity-text">
+              <strong>Played:</strong> Bohemian Rhapsody
+            </div>
+            <span class="activity-time">2h ago</span>
+          </div>
+          <div class="activity-item">
+            <span class="activity-icon">➕</span>
+            <div class="activity-text">
+              <strong>Added:</strong> 3 new songs to Favorites
+            </div>
+            <span class="activity-time">5h ago</span>
+          </div>
+          <div class="activity-item">
+            <span class="activity-icon">👤</span>
+            <div class="activity-text">
+              <strong>Followed:</strong> JazzMaster92
+            </div>
+            <span class="activity-time">1d ago</span>
+          </div>
+        </div>
+      </div>
+    </main>
+
+  
+    <footer class="footer">
+      <p>&copy; 2025 Play Beat. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="#privacy">Privacy</a>
+        <a href="#terms">Terms</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="toggleTheme.js"></script>
+  <script>
+    function loadProfile() {
+      const user = JSON.parse(localStorage.getItem("user"));
+      console.log("Loaded user:", user);
+      if (!user) {
+        window.location.href = "register.html";
+        return;
+      }
+      document.getElementById("profile-info").innerHTML = `
+        <div class="avatar-section">
+          <img id="avatar" src="${user.avatar || 'defaultAva.png'}" alt="User Avatar">
+          <button class="edit-avatar-btn">Change Avatar</button>
+        </div>
+        <div class="user-details">
+          <div class="detail-item">
+            <span class="detail-label">Name:</span>
+            <span class="detail-value">${user.username}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Phone:</span>
+            <span class="detail-value">${user.phone}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Email:</span>
+            <span class="detail-value">${user.email}</span>
+          </div>
+        </div>
+      `;
+    }
+    
+    function logout() {
+      if (confirm("Are you sure you want to log out?")) {
+        localStorage.removeItem("user");
+        window.location.href = "index.html";
+      }
+    }
+    
+    function openFriends() {
+      alert("👥 Friends section coming soon!");
+    }
+    
+    function openSettings() {
+      alert("⚙️ Settings section coming soon!");
+    }
+    
+    loadProfile();
+  </script>
+</body>
+</html>

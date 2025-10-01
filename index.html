@@ -1,0 +1,105 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Play Beat</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="register.css">
+    <style>
+      /* Header layout: left logo, centered nav group, right profile/register */
+      .header {
+        display: flex;
+        align-items: center;
+        padding: 30px 50px;
+        gap: 20px;
+      }
+
+      /* Left logo stays left */
+      .header .logo-wrap {
+        flex: 0 0 auto;
+      }
+
+      /* Center group stretches and centers its contents */
+      .header .center-group {
+        flex: 1 1 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .center-group .center-buttons {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+      }
+
+      /* Right group stays compact on the right */
+      .header .right-group {
+        flex: 0 0 auto;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      /* Ensure small screens keep layout usable */
+      @media (max-width: 900px) {
+        .header {
+          padding: 20px;
+        }
+        .center-group .center-buttons {
+          gap: 10px;
+          flex-wrap: wrap;
+        }
+      }
+    </style>
+</head>
+<body class="light-green">
+
+  <!-- Header (Flexbox) -->
+  <header class="header" style="margin-top: -50px; margin-left: -50px">
+    <div class="logo-wrap">
+      <img id="logo" src="Logos/logoW.png" alt="logo" class="logo" width="220">
+    </div>
+
+    <!-- Centered: About, News, Start Listening, Toggle Theme -->
+    <div class="center-group">
+      <div class="center-buttons">
+        <!-- Keep appearance exactly as in your original code -->
+        <button onclick="window.location.href='about.html'">About</button>
+        <button onclick="window.location.href='news.html'">News</button>
+        <a href="listen.html"><button style="text-decoration: none;">Start Listening</button></a>
+        <!-- Toggle Theme moved into center group as requested -->
+        <button onclick="toggleTheme()">Toggle Theme</button>
+      </div>
+    </div>
+
+    <!-- Right: Register / Profile -->
+    <div class="right-group">
+      <button id="register-btn">Register</button>
+      <button id="user-area" style="display:none;"></button>
+    </div>
+  </header>
+
+  <!-- Intro Page Section -->
+  <section class="intropage" style="margin-top: 70px; text-align: center;">
+    <h2>
+      Welcome to your music world! <br>
+      Your personal online player with favorite tracks, playlists, and smart recommendations.<br>
+      Music is always with you — on your computer, tablet, or phone.
+    </h2>
+    <div class="vinyl" style="margin: 50px auto; width: 300px; height: 300px; background: repeating-radial-gradient(circle, #111 0 2px, #393939 2.5px 7.2px)">
+
+      <div class="label"></div>
+      <div class="spindle"></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer" style="margin-top: 80px; text-align: center; padding: 20px; background: var(--bg1-color); border-radius: 10px;">
+    &copy; 2025 Play Beat. All rights reserved.
+  </footer>
+
+  <script src="toggleTheme.js"></script>
+  <script src="register.js"></script>
+</body>
+</html>
