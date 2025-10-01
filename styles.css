@@ -34,7 +34,7 @@ li {
 }
 button {
     background-color: var(--accent-color);
-    color: 
+    color: var(--text-color);
 #30302f;
     font-weight: bold;
     border: none;
@@ -899,4 +899,5 @@ img.logo {
     font-size: 16px;
     left: 12px;
   }
+
 }
