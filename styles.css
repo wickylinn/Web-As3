@@ -34,8 +34,7 @@ li {
 }
 button {
     background-color: var(--accent-color);
-    color: var(--text-color);
-#30302f;
+    color: var(--bg-color);
     font-weight: bold;
     border: none;
     padding: 12px 20px;
@@ -901,3 +900,4 @@ img.logo {
   }
 
 }
+
